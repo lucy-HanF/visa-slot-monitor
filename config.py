@@ -8,59 +8,46 @@ from dotenv import load_dotenv
 load_dotenv()  # reads .env file automatically
 
 # ── URLs to watch ──────────────────────────────────────────────────────────────
+
+
 URLS = [
     {
-        "label": "CheckVisaSlots — H1B Regular",
-        "url": "https://checkvisaslots.com/latest-us-visa-availability/h-1b-regular/",
+        "label": "CheckVisaSlots - China H1B Regular",
+        "url": "https://checkvisaslots.com/visa-slots-info/cn/h-1-b-regular/",
     },
-    # ── VisaGrader — H1B Biometrics ───────────────────────────────────────────
+
+    # Beijing
     {
-        "label": "VisaGrader — New Delhi H1B Biometrics",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/new-delhi-P147/h1b-visa-H1B#Biometrics",
+        "label": "China - Beijing H1B",
+        "url": "https://visagrader.com/us-visa-time-slots-availability/china-chn/beijing-P24/h1b-visa-H1B",
     },
+
+    # Shanghai
     {
-        "label": "VisaGrader — Chennai H1B Biometrics",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/chennai-P48/h1b-visa-H1B#Biometrics",
+        "label": "China - Shanghai H1B",
+        "url": "https://visagrader.com/us-visa-time-slots-availability/china-chn/shanghai-P187/h1b-visa-H1B",
     },
+
+    # Guangzhou
     {
-        "label": "VisaGrader — Hyderabad H1B Biometrics",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/hyderabad-P85/h1b-visa-H1B#Biometrics",
+        "label": "China - Guangzhou H1B",
+        "url": "https://visagrader.com/us-visa-time-slots-availability/china-chn/guangzhou-P73/h1b-visa-H1B",
     },
+
+    # Shenyang
     {
-        "label": "VisaGrader — Kolkata H1B Biometrics",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/kolkata-P100/h1b-visa-H1B#Biometrics",
-    },
-    {
-        "label": "VisaGrader — Mumbai H1B Biometrics",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/mumbai-P139/h1b-visa-H1B#Biometrics",
-    },
-    # ── VisaGrader — H1B Interview ────────────────────────────────────────────
-    {
-        "label": "VisaGrader — New Delhi H1B Interview",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/new-delhi-P147/h1b-visa-H1B#Interview",
-    },
-    {
-        "label": "VisaGrader — Chennai H1B Interview",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/chennai-P48/h1b-visa-H1B#Interview",
-    },
-    {
-        "label": "VisaGrader — Hyderabad H1B Interview",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/hyderabad-P85/h1b-visa-H1B#Interview",
-    },
-    {
-        "label": "VisaGrader — Kolkata H1B Interview",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/kolkata-P100/h1b-visa-H1B#Interview",
-    },
-    {
-        "label": "VisaGrader — Mumbai H1B Interview",
-        "url": "https://visagrader.com/us-visa-time-slots-availability/india-ind/mumbai-P139/h1b-visa-H1B#Interview",
+        "label": "China - Shenyang H1B",
+        "url": "https://visagrader.com/us-visa-time-slots-availability/china-chn/shenyang-P188/h1b-visa-H1B",
     },
 ]
+
+ 
 
 # ── Check frequency ────────────────────────────────────────────────────────────
 # How often to check each URL (in seconds)
 # 300 = every 5 minutes  |  60 = every minute  |  180 = every 3 minutes
 CHECK_INTERVAL_SECONDS = int(os.getenv("CHECK_INTERVAL", 300))
+CHECK_INTERVAL = int(os.getenv("CHECK_INTERVAL", "900"))
 
 # ── Notification channels ──────────────────────────────────────────────────────
 # Set to True to enable each channel. Configure credentials below or in .env
@@ -81,6 +68,54 @@ TWILIO_WHATSAPP_TO   = os.getenv("TWILIO_WHATSAPP_TO", "")     # e.g. whatsapp:+
 SMS_ENABLED = os.getenv("SMS_ENABLED", "false").lower() == "true"
 TWILIO_SMS_FROM = os.getenv("TWILIO_SMS_FROM", "")   # Your Twilio phone number
 TWILIO_SMS_TO   = os.getenv("TWILIO_SMS_TO", "")     # Your mobile number e.g. +919876543210
+
+# 只監控 H-1B Interview
+APPOINTMENT_TYPE = "Interview"
+VISA_TYPE = "H1B"
+
+# 公開第三方資料頁面
+SITES = [
+    {
+        "city": "北京 Beijing",
+        "enabled": True,
+        "url": (
+            "https://visagrader.com/us-visa-time-slots-availability/"
+            "china-chn/beijing-P24/h1b-visa-H1B"
+        ),
+    },
+    {
+        "city": "上海 Shanghai",
+        "enabled": True,
+        "url": (
+            "https://visagrader.com/us-visa-time-slots-availability/"
+            "china-chn/shanghai-P187/h1b-visa-H1B"
+        ),
+    },
+    {
+        "city": "廣州 Guangzhou",
+        "enabled": True,
+        "url": (
+            "https://visagrader.com/us-visa-time-slots-availability/"
+            "china-chn/guangzhou-P73/h1b-visa-H1B"
+        ),
+    },
+    {
+        "city": "瀋陽 Shenyang",
+        "enabled": True,
+        "url": (
+            "https://visagrader.com/us-visa-time-slots-availability/"
+            "china-chn/shenyang-P188/h1b-visa-H1B"
+        ),
+    },
+
+    # Wuhan: 尚無已驗證的專屬 H-1B Interview 資料網址
+    {
+        "city": "武漢 Wuhan",
+        "enabled": False,
+        "url": "",
+    },
+]
+
 
 # ── Files ──────────────────────────────────────────────────────────────────────
 STATE_FILE = "state.json"   # Stores page hashes between runs
